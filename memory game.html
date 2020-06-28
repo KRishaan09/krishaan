@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div#flip_game{
+	background:black;
+	border:#999 1px solid;
+	width:800px;
+	height:800px;
+	padding:24px;
+	margin:0px auto;
+}
+div#flip_game > div{
+	background: white;
+	border:#000 1px solid;
+	width:71px;
+	height:71px;
+	float:left;
+	margin:10px;
+	padding:20px;
+	font-size:64px;
+	cursor:pointer;
+	text-align:center;
+}
+</style>
+
+</head>
+<body>
+    <div id="win" style="text-align: center;"></div>
+    <select id="difficulty">
+     <option value="Easy">Easy</option>
+     <option value="Medium">Medium</option>
+     <option value="Hard">Hard</option>
+    </select>
+    <h4>Count</h4>
+    <div id="score"></div>
+    <button id="new">NEW GAME</button>
+<div id="flip_game"></div>
+<script>
+var chosenNo1=0,chosenNo2=0;
+var id1,id2;
+var inputArray=[];
+var chosenNo1=0,chosenNo2=0;
+var id1='',id2='';
+var count = 0;
+ alert("Select the Difficulty level before staring a new game");
+
+document.getElementById("new").addEventListener("click",function(){
+    var count = 0;
+    document.getElementById("score").textContent = " "
+    document.getElementById("win").textContent = " "
+    var dropDown = document.getElementById("difficulty"); 
+    var difficultLevel = dropDown.options[dropDown.selectedIndex].value; 
+    if( difficultLevel == "Easy"){
+        var html = '';
+        inputArray = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10];
+        inputArray.rearrange();
+        for(var i = 0; i < inputArray.length; i++){
+		html += '<div id="block_'+i+'" onclick="currentblock(this,\''+inputArray[i]+'\')"></div>';
+       
+        }
+         document.getElementById('flip_game').innerHTML = html;
+         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }else if(difficultLevel == "Medium"){
+            var html = '';
+          inputArray = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12];
+         inputArray.rearrange();
+        for(var i = 0; i < inputArray.length; i++){
+		html += '<div id="block_'+i+'" onclick="currentblock(this,\''+inputArray[i]+'\')"></div>';
+        }
+        document.getElementById('flip_game').innerHTML = html;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }else if(difficultLevel == "Hard"){
+        var html = '';
+          inputArray = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14];
+        inputArray.rearrange();
+        for(var i = 0; i < inputArray.length; i++){
+		html += '<div id="block_'+i+'" onclick="currentblock(this,\''+inputArray[i]+'\')"></div>';
+        
+        }
+        document.getElementById('flip_game').innerHTML = html;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+});
+
+Array.prototype.rearrange = function(){
+    var len = this.length, randomNo, temp;
+    len = len-1
+    while(len > 0){
+        randomNO = Math.floor(Math.random() * (len+1));
+        temp = this[randomNO];
+        this[randomNO] = this[len];
+        this[len] = temp;
+        len -= 1
+    }
+}
+
+ function currentblock(flipblock , no){
+             var blockcode = flipblock.innerHTML;
+             if((chosenNo1 == 0 || chosenNo2 == 0 ) && flipblock.innerHTML ==""){
+                 flipblock.innerHTML = no;
+             if(chosenNo1 == 0){
+                 chosenNo1 = no;
+                 id1 = flipblock.id;
+             }else if(chosenNo2 == 0){
+                 chosenNo2 = no;
+                 id2 = flipblock.id;
+                 
+                 if(chosenNo1 == chosenNo2){
+                     count +=1;
+                     document.getElementById("score").textContent = count;
+                     chosenNo1 = 0;
+                     chosenNo2 = 0;
+                     id1 = 0;
+                     id2 = 0;
+                     if(count == (inputArray.length)/2){
+                         document.getElementById("win").innerHTML="<h1>Game Finished!!!!!You Won</h1>"
+                         document.getElementById('flip_game').innerHTML = "";
+                         inputArray.rearrange();
+        for(var i = 0; i < inputArray.length-1; i++){
+		html += '<div id="block_'+i+'" onclick="currentblock(this,\''+inputArray[i]+'\')"></div>';
+       
+        }
+                         
+                     }
+                 }else{
+                     setTimeout(function(){
+                         document.getElementById(id1).style.background = "white" ;
+                     document.getElementById(id2).style.background = "white";
+                     document.getElementById(id1).innerHTML = "";
+                     document.getElementById(id2).innerHTML = "";
+                     chosenNo1 = 0;
+                     chosenNo2 = 0;
+                     id1 = 0;
+                     id2 = 0;
+                     },1000);
+                 }
+             }
+         }
+ }
+        
+</script>
+
+</body>
+</html>
